@@ -34,6 +34,20 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// In-memory store for blocked IPs
+const blockedIPs = new Set();
+
+// Middleware to check if IP is blocked
+const checkBlocked = (req, res, next) => {
+  const ip = req.ip;
+  if (blockedIPs.has(ip)) {
+    return res.status(429).json({
+      message: "You have been blocked for 15 minutes due to too many requests.",
+    });
+  }
+  next();
+};
+
 // Initial rate limiter: 1 request per second (60 requests per minute)
 const initialLimiter = rateLimit({
   windowMs: 1 * 1000, // 1 second window
@@ -46,22 +60,30 @@ const initialLimiter = rateLimit({
 const burstLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minute window
   max: 30, // Allow 30 requests in 5 minutes
+  standardHeaders: true,
+  legacyHeaders: false,
   handler: (req, res, next) => {
-    // After 30 requests, block the user for 15 minutes
+    const ip = req.ip;
+
+    // Add IP to blocked list
+    blockedIPs.add(ip);
+    console.log(`Rate limit reached for ${ip}, blocking for 15 minutes.`);
+
+    // Set a timeout to remove the IP from blocked list after 15 minutes
+    setTimeout(() => {
+      blockedIPs.delete(ip);
+      console.log(`Unblocked ${ip} after 15 minutes.`);
+    }, 15 * 60 * 1000); // 15 minutes in milliseconds
+
+    // Send the "Too many requests" response
     res.status(429).json({
-      message: "Too many requests. Please wait 15 minutes before trying again.",
+      message: "Too many requests. You have been blocked for 15 minutes.",
     });
-  },
-  onLimitReached: (req, res, options) => {
-    // After limit is reached, create a blocking limiter for 15 minutes
-    const blockFor15Minutes = rateLimit({
-      windowMs: 15 * 60 * 1000, // 15 minutes blocking window
-      max: 0, // No requests allowed during this time
-      message: "You have been blocked for 15 minutes due to too many requests.",
-    });
-    app.use(blockFor15Minutes); // Apply the block for 15 minutes
   },
 });
+
+// Apply the blocked check first
+app.use(checkBlocked);
 
 // Apply the rate limiters
 app.use(initialLimiter); // Use initial limiter first
@@ -116,4 +138,3 @@ app.listen(port, () => {
 // app.listen(port, () => {
 //   console.log(`Server is running on port ${port}`);
 // });
-//
