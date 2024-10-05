@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="/weather/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="/weather/script.js" defer></script>
+  </head>
+  <body>
+    <div class="weather-container">
+      <h1 class="weather-title">Weather Forecast</h1>
+      <div class="search-container">
+        <div class="input-button-wrapper">
+          <input
+            type="text"
+            id="city"
+            placeholder="Enter city"
+            class="city-input"
+          />
+          <button class="search-button" id="search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <div class="select-container">
+          <input
+            type="text"
+            id="country-input"
+            class="country-input"
+            placeholder="Enter country"
+            autocomplete="off"
+          />
+          <ul id="country-suggestions" class="suggestions-list"></ul>
+          <!-- Suggestions box for autocomplete -->
+        </div>
+      </div>
+
+      <div class="weather-info" id="weather-info" style="display: none">
+        <h2 class="city-name" id="cityName">City Name</h2>
+
+        <div class="weather-icon-container">
+          <img id="weatherIcon" src="/weather/sun.jpg" alt="Weather Icon" />
+          <figcaption class="weather-description" id="weatherDescription">
+            Weather Description
+          </figcaption>
+        </div>
+
+        <div class="weather-details">
+          <!-- First Row: Temperature and Humidity -->
+          <div class="weather-row">
+            <div class="weather-card temperature-card">
+              <div class="temperature" id="temperature">🌡️ --°C</div>
+              <div class="label">Temperature</div>
+            </div>
+            <div class="weather-card humidity-card">
+              <div class="humidity" id="humidity">💧 --%</div>
+              <div class="label">Humidity</div>
+            </div>
+          </div>
+          <!-- Second Row: Wind -->
+          <div class="weather-row">
+            <div class="weather-card wind-card">
+              <div class="wind" id="windSpeed">💨 -- m/s</div>
+              <div class="label">Wind Speed</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="error-message" id="error-message" style="display: none"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,299 @@
+/* CSS Variables for Theme Customization */
+:root {
+  --font-family: "Poppins", sans-serif;
+  --background-color: #f7f8fa;
+  --primary-color: #007bff;
+  --secondary-color: #00a1ff;
+  --primary-color-dark: #0056b3; /* Darker shade */
+  --secondary-color-dark: #007acc; /* Darker shade */
+  --text-color: #333;
+  --text-light-color: #777;
+  --border-color: #ccc;
+  --border-radius: 1.25rem; /* 20px */
+  --box-shadow: 0 0.75rem 2.5rem rgba(0, 0, 0, 0.1); /* 0 12px 40px */
+  --transition-duration: 0.3s;
+  --container-max-width: 37.5rem; /* 600px */
+  --padding: 2.5rem; /* 40px */
+  --gap: 1.25rem; /* 20px */
+  --input-padding: 0.75rem; /* 12px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 2rem; /* 32px */
+  --font-size-xl: 2.5rem; /* 40px */
+  --font-size-icon: 1.25rem; /* 20px */
+  --font-size-label: 1rem; /* 16px */
+  --font-size-temp: 1.625rem; /* 26px */
+  --box-shadow-hover: 0 0.9375rem 2.8125rem rgba(0, 0, 0, 0.2); /* 0 15px 45px */
+}
+
+/* Base Styles */
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0 1.25rem; /* 20px */
+  overflow-x: hidden;
+}
+
+/* Weather Container */
+.weather-container {
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: var(--padding);
+  max-width: var(--container-max-width);
+  width: 100%;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-duration) ease;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+  margin: 0 auto;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.weather-container:hover {
+  box-shadow: var(--box-shadow-hover);
+}
+
+/* Title */
+.weather-title {
+  font-size: 1.75rem; /* 28px */
+  margin-bottom: 1.5625rem; /* 25px */
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+/* Search Container */
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 25rem; /* 400px */
+  margin: 0 auto; /* Remove bottom margin */
+}
+
+/* Input and Button Wrapper */
+.input-button-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem; /* Space between input and button */
+  width: 100%;
+  margin-bottom: 1rem; /* Space between input-button row and select */
+}
+
+/* City Input */
+.city-input {
+  flex: 1;
+  padding: var(--input-padding) 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  box-sizing: border-box;
+}
+
+/* Search Button */
+.search-button {
+  background: var(--primary-color);
+  border: none;
+  color: white;
+  padding: 0.625rem;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-button i {
+  font-size: 1rem;
+}
+
+/* Country Select Container */
+.select-container {
+  width: 100%;
+  position: relative;
+}
+
+/* Country Input */
+.country-input {
+  width: 100%;
+  padding: var(--input-padding) 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  box-sizing: border-box;
+}
+
+/* Suggestions List Styling */
+.suggestions-list {
+  position: absolute;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0;
+  list-style-type: none;
+  display: none;
+}
+
+.suggestions-list li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.suggestions-list li:hover,
+.suggestions-list li.highlighted {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.suggestions-list li.matched-country {
+  font-weight: bold;
+}
+
+.suggestions-list li.other-country {
+  opacity: 0.5;
+}
+
+/* Weather Info */
+.weather-info {
+  margin-top: 1.5625rem; /* 25px */
+}
+
+.city-name {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0.1rem 0;
+}
+
+.weather-icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.weather-icon-container img {
+  width: 100px;
+  height: 100px;
+}
+
+/* Weather Description */
+.weather-description {
+  font-size: var(--font-size-base); /* Use base font size */
+  font-weight: 500;
+  color: var(--text-light-color);
+  margin-top: 0.1rem; /* Reduce space between icon and description */
+  text-transform: capitalize;
+}
+
+/* Weather Details */
+.weather-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  width: 100%;
+}
+
+/* Weather Row */
+.weather-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+/* Weather Card General Styling */
+.weather-card {
+  background-color: #f9f9f9;
+  border-radius: 0.9375rem; /* 15px */
+  padding: 1.5625rem; /* 25px */
+  box-shadow: 0 0.375rem 1.25rem rgba(0, 0, 0, 0.07); /* 0 6px 20px */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* Temperature and Humidity Cards */
+.temperature-card,
+.humidity-card {
+  flex: 0 0 calc(50% - var(--gap) / 2);
+}
+
+/* Wind Card */
+.wind-card {
+  flex: 0 0 calc(100% - var(--gap) / 2);
+}
+
+/* Hover effect */
+.weather-card:hover {
+  transform: translateY(-0.3125rem); /* -5px */
+}
+
+.temperature,
+.humidity,
+.wind {
+  font-size: var(--font-size-temp);
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.label {
+  margin-top: 0.5rem; /* 8px */
+  font-size: var(--font-size-label);
+  color: var(--text-light-color);
+}
+
+/* Error Message Styling */
+.error-message {
+  color: red;
+  font-size: var(--font-size-base);
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+  .weather-row {
+    flex-direction: column;
+  }
+  .temperature-card,
+  .humidity-card,
+  .wind-card {
+    flex: 1 1 100%;
+  }
+}
+
+/* Mobile Optimization */
+@media (max-width: 600px) {
+  .input-button-wrapper {
+    flex-direction: row;
+  }
+
+  .city-input {
+    padding: var(--input-padding) 0.75rem;
+  }
+
+  .search-button {
+    padding: 0.5rem;
+  }
+
+  .country-input {
+    margin-top: 1rem; /* Space between input-button and dropdown */
+  }
+}
