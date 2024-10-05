@@ -17,7 +17,7 @@ app.use(express.json());
 const whitelist = [
   "http://127.0.0.1",
   "http://127.0.0.1:5500",
-  "https://gurgant.github.io/weather-app-vanilla-js/",
+  "https://gurgant.github.io",
 ]; // Add your frontend URL here as a string
 
 const corsOptions = {
