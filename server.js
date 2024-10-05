@@ -18,7 +18,8 @@ const whitelist = [
   "http://127.0.0.1",
   "http://127.0.0.1:5500",
   "https://gurgant.github.io",
-]; // Add your frontend URL here as a string
+  "https://weather-app-vanilla-js.onrender.com",
+]; // Make both frontend and backend URLs whitelisted
 
 const corsOptions = {
   origin: function (origin, callback) {
