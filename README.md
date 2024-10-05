@@ -23,7 +23,7 @@ Welcome to the **Weather Forecast App**—a responsive, user-friendly applicatio
 
 ## 🚀 Demo
 
-Check out the live application: [Weather Forecast App Live Demo](https://your-app-name.onrender.com)
+Check out the live application: [Weather Forecast App Live Demo](https://gurgant.github.io/weather-app-vanilla-js/)
 
 _Note: Replace the URL with your actual deployed app link once available._
 
@@ -218,7 +218,7 @@ This project is licensed under the MIT License.
 
 Your Name  
 Email: your.email@example.com  
-GitHub: [your-username](https://github.com/your-username)
+GitHub: [your-username](https://github.com/Gurgant)
 
 Feel free to reach out for any questions or suggestions!
 
