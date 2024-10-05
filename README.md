@@ -45,11 +45,11 @@ _Note: Replace the URL with your actual deployed app link once available._
 
 ### Mobile View
 
-![Mobile View](https://link-to-your-mobile-screenshot.png)
+![Mobile View](/images/mobile-screenshot.png)
 
 ### Desktop View
 
-![Desktop View](https://link-to-your-desktop-screenshot.png)
+![Desktop View](/images/desktop-screenshot.png)
 
 _Note: Replace the image URLs with actual paths to your screenshots._
 
