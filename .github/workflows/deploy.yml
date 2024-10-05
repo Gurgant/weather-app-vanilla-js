@@ -20,6 +20,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # Correct GitHub token
-          publish_branch: master # Deploy to master instead of gh-pages
-          publish_dir: ./ # Root directory where files are copied
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages # Deploy to gh-pages branch
+          publish_dir: ./ # The root directory where files are copied
