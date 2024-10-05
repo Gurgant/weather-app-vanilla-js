@@ -20,7 +20,7 @@ const isProduction = !(
   window.location.hostname.includes("127.0.0.1")
 );
 const apiUrl = isProduction
-  ? "https://your-backend-url.onrender.com" // Production backend URL
+  ? "https://weather-app-vanilla-js.onrender.com" // Production backend URL
   : "http://localhost:3000"; // Local development backend URL
 
 document.addEventListener("DOMContentLoaded", () => {
