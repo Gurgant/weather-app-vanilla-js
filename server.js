@@ -14,7 +14,11 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 
-const whitelist = ["http://127.0.0.1", "http://127.0.0.1:5500"]; // Add your frontend URL here as a string
+const whitelist = [
+  "http://127.0.0.1",
+  "http://127.0.0.1:5500",
+  "https://gurgant.github.io/weather-app-vanilla-js/",
+]; // Add your frontend URL here as a string
 
 const corsOptions = {
   origin: function (origin, callback) {
