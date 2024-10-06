@@ -1,12 +1,21 @@
-// Es module syntax is not supported in Node.js by default. To use it, we need to add "type": "module" in package.json
+// server.js
 
+// Import necessary modules
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { fetchWeather, fetchCountries } from "./apiCalls.js"; // API logic in a separate file
+import path from "path";
+import { fileURLToPath } from "url";
+import favicon from "serve-favicon";
 
-dotenv.config(); // Load environment variables
+// ES module workaround for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -14,6 +23,7 @@ const port = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 
+// CORS configuration
 const whitelist = [
   "http://127.0.0.1",
   "http://127.0.0.1:5500",
@@ -34,6 +44,20 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Serve favicon using serve-favicon middleware
+app.use(
+  favicon(path.join(__dirname, "backend-assets", "favicon.ico"), (err) => {
+    if (err) {
+      console.error("Failed to load favicon:", err);
+    } else {
+      console.log("Favicon loaded successfully.");
+    }
+  })
+);
+
+// Serve static files (including favicon)
+app.use(express.static(path.join(__dirname, "backend-assets")));
+
 // In-memory store for blocked IPs
 const blockedIPs = new Set();
 
@@ -48,21 +72,24 @@ const checkBlocked = (req, res, next) => {
   next();
 };
 
+// Apply the blocked check first
+app.use(checkBlocked);
+
 // Initial rate limiter: 1 request per second (60 requests per minute)
 const initialLimiter = rateLimit({
   windowMs: 1 * 1000, // 1 second window
-  max: 1, // Start with 1 request per second (60 requests per minute)
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  max: 1, // 1 request per second
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 // Burst limiter: After 30 requests in 5 minutes, block for 15 minutes
 const burstLimiter = rateLimit({
-  windowMs: 5 * 60 * 1000, // 5 minute window
-  max: 30, // Allow 30 requests in 5 minutes
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 30, // 30 requests
   standardHeaders: true,
   legacyHeaders: false,
-  handler: (req, res, next) => {
+  handler: (req, res) => {
     const ip = req.ip;
 
     // Add IP to blocked list
@@ -73,7 +100,7 @@ const burstLimiter = rateLimit({
     setTimeout(() => {
       blockedIPs.delete(ip);
       console.log(`Unblocked ${ip} after 15 minutes.`);
-    }, 15 * 60 * 1000); // 15 minutes in milliseconds
+    }, 15 * 60 * 1000); // 15 minutes
 
     // Send the "Too many requests" response
     res.status(429).json({
@@ -82,22 +109,17 @@ const burstLimiter = rateLimit({
   },
 });
 
-// Apply the blocked check first
-app.use(checkBlocked);
-
 // Apply the rate limiters
-app.use(initialLimiter); // Use initial limiter first
-app.use(burstLimiter); // Use burst limiter after
+app.use(initialLimiter);
+app.use(burstLimiter);
 
-// Handle favicon request to avoid 404
-app.get("/favicon.ico", (req, res) => res.status(204)); // No Content
-
-app.get("/countries", fetchCountries);
-
-// Example API route for testing
+// Example API route for testing (serving HTML with favicon reference)
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
+
+// Additional API routes
+app.get("/countries", fetchCountries);
 
 // API call route directly in server.js (example)
 app.get("/fetchWeather", async (req, res) => {
